@@ -2,13 +2,17 @@ from data_import import data_txt_import_array
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer, WordNetLemmatizer
+from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
 import string
+import re
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
 
 
 def text_processed():
     txt = data_txt_import_array('test.txt')
     print(txt)
-    txt = strip_punctation(txt)
+    # txt = strip_punctation(txt)
 
     format_token = text_stop_words(txt)
     print('filtered_sentence \n')
@@ -21,6 +25,23 @@ def text_processed():
     lemmeted_token = token_lemmetizer(format_token)
     print('Lemmeted token \n')
     print(lemmeted_token)
+    str = ' '.join(lemmeted_token)
+    print('Lemmeted string \n')
+    print(str)
+    str_array = re.split(r'[,.]', str)
+    print(str_array)
+    vectorizer = TfidfVectorizer()
+    # tokenize and build vocab
+    vectorizer.fit(str_array)
+    # summarize
+    print(vectorizer.get_feature_names())
+    # encode document
+    vector = vectorizer.transform("subject is not the case")
+    # summarize encoded vector
+    print(vector.shape)
+    print(type(vector))
+    print(vector.toarray())
+    #print(vectorizer.vocabulary_)
     return
 
 
