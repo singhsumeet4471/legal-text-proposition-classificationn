@@ -1,22 +1,42 @@
-from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
 import string
 import re
 from text_processing import text_processed
 
+
 def count_vectorizer_feature_vector():
-    token = text_processed()
-    str_array = re.split(r'[,.]', token)
-    print(str_array)
-    vectorizer = CountVectorizer()
+    token_array = text_processed()
+    vectorizer = CountVectorizer(encoding='utf-8', analyzer='word', stop_words='english', binary='false',
+                                 min_df=0.01)
     # tokenize and build vocab
-    vectorizer.fit(str_array)
+    vectorizer.fit_transform(token_array)
+    print(vectorizer.get_feature_names())
+    f_vector = vectorizer.transform(token_array)
+    print(f_vector.shape)
+    print(f_vector.toarray())
+    return f_vector
+
+
+def tf_idf_vect_feature_vector():
+    token_array = text_processed()
+    print(token_array)
+    vectorizer = TfidfVectorizer(analyzer="word")
+    vector = vectorizer.fit_transform(token_array)
+    print(vectorizer.get_feature_names())
+    print(vector.toarray())
+    return vector
+
+
+def tf_idf_trans_feature_vector():
+    token_array = text_processed()
+    print(token_array)
+    vectorizer = TfidfTransformer(analyzer="word")
+    # tokenize and build vocab
+    X = vectorizer.fit_transform(token_array)
+    analyze = vectorizer.build_analyzer()
+    print(analyze("subject is not the case"))
     # summarize
     print(vectorizer.get_feature_names())
-    # encode document
-    vector = vectorizer.transform("subject is not the case")
     # summarize encoded vector
-    print(vector.shape)
-    print(type(vector))
-    print(vector.toarray())
-    # print(vectorizer.vocabulary_)
+    print(X.toarray())
     return

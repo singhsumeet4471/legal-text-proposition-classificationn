@@ -11,25 +11,24 @@ from sklearn.cluster import KMeans
 
 def text_processed():
     txt = data_txt_import_array('test.txt')
-    print(txt)
     # txt = strip_punctation(txt)
-
     format_token = text_stop_words(txt)
-    print('filtered_sentence \n')
-    print(format_token)
-    # stemming
     stemmed_token = token_stemmer(format_token)
-    print('Stemmed token \n')
-    print(stemmed_token)
-    # lemm
     lemmeted_token = token_lemmetizer(format_token)
-    print('Lemmeted token \n')
-    print(lemmeted_token)
     str = ' '.join(lemmeted_token)
-    print('Lemmeted string \n')
-    print(str)
-
-    return str
+    str_array = re.split(r'[,.]', str)
+    # print(txt)
+    # print('filtered_sentence \n')
+    # print(format_token)
+    # stemming
+    # print('Stemmed token \n')
+    # print(stemmed_token)
+    # lemm
+    # print('Lemmeted token \n')
+    # print(lemmeted_token)
+    # print('Lemmeted string \n')
+    # print(str)
+    return str_array
 
 
 def text_stop_words(unformat_text):
