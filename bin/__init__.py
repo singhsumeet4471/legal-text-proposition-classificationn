@@ -1,6 +1,6 @@
 import numpy
 import scipy
 
-from text_processing import text_processed
+from feature_extraction import count_vectorizer_feature_vector
 
-text_processed()
+count_vectorizer_feature_vector()

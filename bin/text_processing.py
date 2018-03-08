@@ -28,21 +28,8 @@ def text_processed():
     str = ' '.join(lemmeted_token)
     print('Lemmeted string \n')
     print(str)
-    str_array = re.split(r'[,.]', str)
-    print(str_array)
-    vectorizer = TfidfVectorizer()
-    # tokenize and build vocab
-    vectorizer.fit(str_array)
-    # summarize
-    print(vectorizer.get_feature_names())
-    # encode document
-    vector = vectorizer.transform("subject is not the case")
-    # summarize encoded vector
-    print(vector.shape)
-    print(type(vector))
-    print(vector.toarray())
-    #print(vectorizer.vocabulary_)
-    return
+
+    return str
 
 
 def text_stop_words(unformat_text):
