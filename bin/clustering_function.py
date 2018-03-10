@@ -14,7 +14,7 @@ def get_cluster_kmeans(tfidf_matrix, num_clusters):
 
 
 def get_dbscan_cluster(tfidf_matrix, epsilon):
-    db = DBSCAN(eps=epsilon, min_samples=3).fit(tfidf_matrix)
+    db = DBSCAN(eps=epsilon, min_samples=8).fit(tfidf_matrix)
     core_samples_mask = np.zeros_like(db.labels_, dtype=bool)
     core_samples_mask[db.core_sample_indices_] = True
     labels = db.labels_
