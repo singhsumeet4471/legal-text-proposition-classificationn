@@ -18,6 +18,7 @@ cluster = get_cluster_kmeans(matrix, no_cluster)
 print(cluster)
 cluster = get_dbscan_cluster(matrix,1)
 print(cluster)
+print(cluster)
 
 # word2vec_feature_vector()
 
