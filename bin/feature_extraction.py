@@ -1,6 +1,7 @@
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
 import string
 import re
+from gensim import utils, corpora, matutils, models
 from text_processing import text_processed
 
 
@@ -39,4 +40,13 @@ def tf_idf_trans_feature_vector():
     print(vectorizer.get_feature_names())
     # summarize encoded vector
     print(X.toarray())
+    return
+
+
+def word2vec_feature_vector():
+    token_array = text_processed()
+    print(token_array)
+
+    model = models.Word2Vec(token_array, min_count=1)
+    print(model)
     return

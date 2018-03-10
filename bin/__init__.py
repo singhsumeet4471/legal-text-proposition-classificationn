@@ -1,7 +1,8 @@
 import numpy
 import scipy
 
-from feature_extraction import count_vectorizer_feature_vector, tf_idf_trans_feature_vector, tf_idf_vect_feature_vector
+from feature_extraction import count_vectorizer_feature_vector, tf_idf_trans_feature_vector, tf_idf_vect_feature_vector, \
+    word2vec_feature_vector
 from clustering_function import get_cluster_kmeans
 
 vector = count_vectorizer_feature_vector()
@@ -12,3 +13,5 @@ cluster = get_cluster_kmeans(vector, no_cluster)
 print(cluster)
 cluster = get_cluster_kmeans(matrix, no_cluster)
 print(cluster)
+# word2vec_feature_vector()
+

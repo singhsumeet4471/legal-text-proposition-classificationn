@@ -5,6 +5,8 @@ from nltk.stem import PorterStemmer, WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
 import string
 import re
+import numpy as np
+import numpy.random as npr
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 
@@ -65,3 +67,11 @@ def token_lemmetizer(token):
     for w in token:
         lemmeted_token.append(wordnet_lemmatizer.lemmatize(w, pos='v'))
     return lemmeted_token
+
+
+def split_data(data, train_split=0.8):
+    data = np.array(data)
+    num_train = data.shape[0] * train_split
+    npr.shuffle(data)
+
+    return (data[:num_train], data[num_train:])
