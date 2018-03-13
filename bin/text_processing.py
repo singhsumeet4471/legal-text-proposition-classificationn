@@ -18,7 +18,7 @@ def text_processed():
     stemmed_token = token_stemmer(format_token)
     lemmeted_token = token_lemmetizer(format_token)
     str = ' '.join(lemmeted_token)
-    str_array = re.split(r'[,.]', str)
+    str_array = re.split(r'[.]', str)
     # print(txt)
     # print('filtered_sentence \n')
     # print(format_token)

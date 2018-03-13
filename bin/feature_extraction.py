@@ -3,6 +3,8 @@ import string
 import re
 from gensim import utils, corpora, matutils, models
 from text_processing import text_processed
+import numpy as np
+np.set_printoptions(threshold=np.inf)
 
 
 def count_vectorizer_feature_vector():
