@@ -52,3 +52,10 @@ def word2vec_feature_vector():
     model = models.Word2Vec(token_array, min_count=1)
     print(model)
     return
+
+def cluster_indices(cluster_assignments):
+    n = cluster_assignments.max()
+    indices = []
+    for cluster_number in range(1, n + 1):
+        indices.append(np.where(cluster_assignments == cluster_number)[0])
+    return indices
