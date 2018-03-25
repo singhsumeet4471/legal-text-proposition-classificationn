@@ -4,6 +4,9 @@ import re
 from gensim import utils, corpora, matutils, models
 from text_processing import text_processed
 import numpy as np
+import pandas as pd
+
+pd.set_option("display.max_columns", 100)
 np.set_printoptions(threshold=np.inf)
 
 
@@ -22,12 +25,12 @@ def count_vectorizer_feature_vector():
 
 def tf_idf_vect_feature_vector():
     token_array = text_processed()
-    print(token_array)
-    vectorizer = TfidfVectorizer(analyzer="word")
-    vector = vectorizer.fit_transform(token_array)
-    print(vectorizer.get_feature_names())
-    print(vector.toarray())
-    return vector
+    print("token: ", token_array)
+    vectorizer = TfidfVectorizer(stop_words='english', analyzer="word")
+    matrix = vectorizer.fit_transform(token_array)
+    data_frame = pd.DataFrame(matrix.toarray(), columns=vectorizer.get_feature_names())
+    # print(data_frame)
+    return matrix
 
 
 def tf_idf_trans_feature_vector():
@@ -42,16 +45,16 @@ def tf_idf_trans_feature_vector():
     print(vectorizer.get_feature_names())
     # summarize encoded vector
     print(X.toarray())
-    return
+    return X
 
 
 def word2vec_feature_vector():
     token_array = text_processed()
     print(token_array)
-
     model = models.Word2Vec(token_array, min_count=1)
     print(model)
     return
+
 
 def cluster_indices(cluster_assignments):
     n = cluster_assignments.max()

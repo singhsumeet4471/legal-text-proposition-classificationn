@@ -1,4 +1,4 @@
-from data_import import data_txt_import_array
+from data_import import data_txt_import_array,data_csv_import
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer, WordNetLemmatizer
@@ -12,12 +12,14 @@ from sklearn.cluster import KMeans
 
 
 def text_processed():
-    txt = data_txt_import_array('test.txt')
-    # txt = strip_punctation(txt)
+    txt = data_csv_import('20180313151844.csv')
+    # txt = data_txt_import_array('test.txt')
+    # txt = strip_punctation(txt.lower())
+    txt = remove_numeric_digit(txt)
     format_token = text_stop_words(txt)
-    stemmed_token = token_stemmer(format_token)
     lemmeted_token = token_lemmetizer(format_token)
-    str = ' '.join(lemmeted_token)
+    stemmed_token = token_stemmer(lemmeted_token)
+    str = ' '.join(stemmed_token)
     str_array = re.split(r'[.]', str)
     # print(txt)
     # print('filtered_sentence \n')
@@ -36,8 +38,8 @@ def text_processed():
 def text_stop_words(unformat_text):
     stop_words = set(stopwords.words('english'))
     word_tokens = word_tokenize(unformat_text)
-    print('tokens \n')
-    print(word_tokens)
+    # print('tokens \n')
+    # print(word_tokens)
 
     format_token = []
     for w in word_tokens:
@@ -51,6 +53,10 @@ def strip_punctation(text):
     translate_table = dict((ord(char), None) for char in string.punctuation)
     stripped_text = text.translate(translate_table)
     return stripped_text
+
+def remove_numeric_digit(text):
+    result = ''.join([i for i in text if not i.isdigit()])
+    return result
 
 
 def token_stemmer(token):
