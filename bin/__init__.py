@@ -1,25 +1,18 @@
-import numpy
-import scipy
 import numpy as np
-from xml2csv import convert_xml2csv
 
 np.set_printoptions(threshold=np.inf)
 
-from feature_extraction import count_vectorizer_feature_vector, tf_idf_trans_feature_vector, tf_idf_vect_feature_vector, \
-    word2vec_feature_vector,cluster_indices
-from clustering_function import get_cluster_kmeans,get_dbscan_cluster,tsne_reduction
-
-from data_import import data_csv_import
+from feature_extraction import dissimalrity_matrix
 
 #vector = count_vectorizer_feature_vector()
 # print('tf-idf vector')
-matrix = tf_idf_vect_feature_vector()
+#matrix = tf_idf_vect_feature_vector()
 
-#
+
 
 no_cluster = 9
-cluster = get_cluster_kmeans(matrix, no_cluster)
-print(cluster)
+#cluster = get_cluster_kmeans(matrix, no_cluster)
+#print(cluster)
 # cluster = get_cluster_kmeans(matrix, no_cluster)
 # print(cluster)
 # cluster = get_dbscan_cluster(matrix,1)
@@ -27,5 +20,16 @@ print(cluster)
 # print(cluster)
 
 # word2vec_feature_vector()
+
+#txt = data_csv_import('20180313151844.csv')
+vec = dissimalrity_matrix()
+print(vec)
+
+#dmt = DistanceMatrix1(matrix)
+
+#print(dmt)
+
+#hc = HClust(dmt)
+#cluster = HClust.clusters
 
 

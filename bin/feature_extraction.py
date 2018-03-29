@@ -1,10 +1,9 @@
-from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
-import string
-import re
-from gensim import utils, corpora, matutils, models
-from text_processing import text_processed
 import numpy as np
 import pandas as pd
+from gensim import models
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
+from sklearn.metrics.pairwise import euclidean_distances
+from text_processing import text_processed
 
 pd.set_option("display.max_columns", 100)
 np.set_printoptions(threshold=np.inf)
@@ -25,11 +24,12 @@ def count_vectorizer_feature_vector():
 
 def tf_idf_vect_feature_vector():
     token_array = text_processed()
-    print("token: ", token_array)
+    #print("token: ", token_array)
     vectorizer = TfidfVectorizer(stop_words='english', analyzer="word")
+    #print(vectorizer)
     matrix = vectorizer.fit_transform(token_array)
     data_frame = pd.DataFrame(matrix.toarray(), columns=vectorizer.get_feature_names())
-    # print(data_frame)
+    #print(data_frame)
     return matrix
 
 
@@ -62,3 +62,13 @@ def cluster_indices(cluster_assignments):
     for cluster_number in range(1, n + 1):
         indices.append(np.where(cluster_assignments == cluster_number)[0])
     return indices
+
+def dissimalrity_matrix():
+    token_array = text_processed()
+    vectorizer = TfidfVectorizer(stop_words='english', analyzer="word")
+
+    td_if = vectorizer.fit_transform(token_array)
+    matrix = euclidean_distances(td_if)
+
+    print(matrix)
+

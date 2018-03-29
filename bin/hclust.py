@@ -55,7 +55,7 @@ def bottom_triangle(stream):
             yield '\t'.join(entries[0:line_num - 1])
 
 
-class DistanceMatrix:
+class DistanceMatrix1:
     def __init__(self, stream, full=False):
         """
         Create a new distance matrix object based on the filelike 'stream'.
