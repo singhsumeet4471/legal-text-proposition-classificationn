@@ -3,6 +3,7 @@ import pandas as pd
 from gensim import models
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
 from sklearn.metrics.pairwise import euclidean_distances
+
 from text_processing import text_processed
 
 pd.set_option("display.max_columns", 100)

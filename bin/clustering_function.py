@@ -1,10 +1,11 @@
 import numpy as np
-from plotting_clusters import plot_histo
 from sklearn.cluster import DBSCAN
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 from sklearn.manifold import MDS
 from sklearn.manifold import TSNE
+
+from plotting_clusters import plot_histo
 
 
 def get_cluster_kmeans(tfidf_matrix, num_clusters):
