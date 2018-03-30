@@ -68,7 +68,12 @@ def dissimalrity_matrix():
     vectorizer = TfidfVectorizer(stop_words='english', analyzer="word")
 
     td_if = vectorizer.fit_transform(token_array)
+    x= td_if.toarray()
+    y= vectorizer.get_feature_names()
+    print(x)
+    print(y)
     matrix = euclidean_distances(td_if)
 
-    print(matrix)
+    #print(matrix)
+    return matrix
 
