@@ -3,6 +3,7 @@ import pandas as pd
 from gensim import models
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
 from sklearn.metrics.pairwise import euclidean_distances
+
 from text_processing import text_processed
 
 pd.set_option("display.max_columns", 100)
@@ -68,7 +69,12 @@ def dissimalrity_matrix():
     vectorizer = TfidfVectorizer(stop_words='english', analyzer="word")
 
     td_if = vectorizer.fit_transform(token_array)
+    x= td_if.toarray()
+    y= vectorizer.get_feature_names()
+    print(x)
+    print(y)
     matrix = euclidean_distances(td_if)
 
-    print(matrix)
+    #print(matrix)
+    return matrix
 

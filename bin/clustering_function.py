@@ -1,24 +1,36 @@
 import numpy as np
+from plotting_clusters import plot_histo, plot
 from sklearn.cluster import DBSCAN
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
+from sklearn.decomposition import TruncatedSVD
 from sklearn.manifold import MDS
 from sklearn.manifold import TSNE
 
 
 def get_cluster_kmeans(tfidf_matrix, num_clusters):
+
     km = KMeans(n_clusters=num_clusters)
     km.fit(tfidf_matrix)
+    tfs_embedded =truncate_SVD(tfidf_matrix,num_clusters)
+    plot(tfs_embedded,km)
+    plot_histo(km.labels_,num_clusters)
     cluster_list = km.labels_.tolist()
+
     return cluster_list
 
 
-def get_dbscan_cluster(tfidf_matrix, epsilon):
-    db = DBSCAN(eps=epsilon, min_samples=8).fit(tfidf_matrix)
+def get_dbscan_cluster(tfidf_matrix, epsilon,samples):
+    #for values less than zero scatter plot is shown which in not acceptable
+    #and for values 1 and more than it only one cluster is shown which again fails to classify different label which we need
+    db = DBSCAN(eps=epsilon, min_samples=samples).fit(tfidf_matrix)
     core_samples_mask = np.zeros_like(db.labels_, dtype=bool)
     core_samples_mask[db.core_sample_indices_] = True
     labels = db.labels_
-    # n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
+    n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
+    tfs_embedded = truncate_SVD(tfidf_matrix, n_clusters_)
+    plot(tfs_embedded, db)
+    plot_histo(labels, n_clusters_)
     return labels
 
 
@@ -43,3 +55,8 @@ def tsne_reduction(similarity_matrix):
     tsne = TSNE(learning_rate=1000).fit_transform(one_min_sim)
     x_pos, y_pos = tsne[:, 0], tsne[:, 1]
     return (x_pos, y_pos)
+
+def truncate_SVD(tfidf_matrix,num_clusters):
+    tfs_reduced = TruncatedSVD(n_components=num_clusters, random_state=0).fit_transform(tfidf_matrix)
+    tfs_embedded = TSNE(n_components=2, perplexity=40, verbose=2).fit_transform(tfs_reduced)
+    return  tfs_embedded
