@@ -31,6 +31,7 @@ def get_dbscan_cluster(tfidf_matrix, epsilon,samples):
     core_samples_mask[db.core_sample_indices_] = True
     labels = db.labels_
     x = metrics.silhouette_score(tfidf_matrix, labels, metric='euclidean')
+
     print("Silhouette Coefficient score for DB-Scan is : ", x)
     n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
     tfs_embedded = truncate_SVD(tfidf_matrix, n_clusters_)
