@@ -3,16 +3,16 @@ import numpy as np
 np.set_printoptions(threshold=np.inf)
 
 from feature_extraction import tf_idf_vect_feature_vector
-from clustering_function import get_cluster_kmeans
+from clustering_function import get_dbscan_cluster
 
 #vector = count_vectorizer_feature_vector()
 # print('tf-idf vector')
 matrix = tf_idf_vect_feature_vector()
 
 
-no_cluster = 50
+no_cluster = 5
 
-cluster = get_cluster_kmeans(matrix, no_cluster)
+cluster = get_dbscan_cluster(matrix,1.5,3)
 
 #plot(cluster)
 
