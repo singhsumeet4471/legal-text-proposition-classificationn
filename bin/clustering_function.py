@@ -1,5 +1,6 @@
 import numpy as np
 from plotting_clusters import plot_histo, plot
+from sklearn import metrics
 from sklearn.cluster import DBSCAN
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
@@ -13,6 +14,8 @@ def get_cluster_kmeans(tfidf_matrix, num_clusters):
     km = KMeans(n_clusters=num_clusters)
     km.fit(tfidf_matrix)
     tfs_embedded =truncate_SVD(tfidf_matrix,num_clusters)
+    x = metrics.silhouette_score(tfidf_matrix, km.labels_, metric='euclidean')
+    print("Silhouette Coefficient score for K-means is : ", x)
     plot(tfs_embedded,km)
     plot_histo(km.labels_,num_clusters)
     cluster_list = km.labels_.tolist()
@@ -27,6 +30,9 @@ def get_dbscan_cluster(tfidf_matrix, epsilon,samples):
     core_samples_mask = np.zeros_like(db.labels_, dtype=bool)
     core_samples_mask[db.core_sample_indices_] = True
     labels = db.labels_
+    x = metrics.silhouette_score(tfidf_matrix, labels, metric='euclidean')
+
+    print("Silhouette Coefficient score for DB-Scan is : ", x)
     n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
     tfs_embedded = truncate_SVD(tfidf_matrix, n_clusters_)
     plot(tfs_embedded, db)
