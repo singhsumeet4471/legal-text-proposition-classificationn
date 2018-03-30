@@ -1,4 +1,5 @@
 import numpy as np
+from plotting_clusters import plot_histo
 from sklearn.cluster import DBSCAN
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
@@ -7,9 +8,13 @@ from sklearn.manifold import TSNE
 
 
 def get_cluster_kmeans(tfidf_matrix, num_clusters):
+
     km = KMeans(n_clusters=num_clusters)
     km.fit(tfidf_matrix)
+    #plot(tfidf_matrix,km)
+    plot_histo(km.labels_,num_clusters)
     cluster_list = km.labels_.tolist()
+
     return cluster_list
 
 
