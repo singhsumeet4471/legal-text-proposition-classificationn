@@ -75,9 +75,9 @@ def token_lemmetizer(token):
     return lemmeted_token
 
 
-def split_data(data, train_split=0.8):
-    data = np.array(data)
-    num_train = data.shape[0] * train_split
+def split_string_2_data_array(data, train_split=0.8):
+    #data = np.array(data)
+    num_train = int(len(data) * train_split)
     npr.shuffle(data)
 
     return (data[:num_train], data[num_train:])

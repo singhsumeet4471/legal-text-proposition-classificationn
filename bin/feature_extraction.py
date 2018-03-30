@@ -4,7 +4,8 @@ from gensim import models
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
 from sklearn.metrics.pairwise import euclidean_distances
 
-from text_processing import text_processed
+from text_processing import text_processed, split_string_2_data_array
+from sklearn.metrics.pairwise import cosine_similarity
 
 pd.set_option("display.max_columns", 100)
 np.set_printoptions(threshold=np.inf)
@@ -12,6 +13,8 @@ np.set_printoptions(threshold=np.inf)
 
 def count_vectorizer_feature_vector():
     token_array = text_processed()
+    training_token_array, test_token_array = split_string_2_data_array(token_array, 0.8)
+
     vectorizer = CountVectorizer(encoding='utf-8', analyzer='word', stop_words='english', binary='false',
                                  min_df=0.01)
     # tokenize and build vocab
@@ -25,19 +28,22 @@ def count_vectorizer_feature_vector():
 
 def tf_idf_vect_feature_vector():
     token_array = text_processed()
-    #print("token: ", token_array)
+    training_token_array, test_token_array = split_string_2_data_array(token_array, 0.8)
+    # print("token: ", token_array)
     vectorizer = TfidfVectorizer(stop_words='english', analyzer="word")
-    #print(vectorizer)
-    matrix = vectorizer.fit_transform(token_array)
-    data_frame = pd.DataFrame(matrix.toarray(), columns=vectorizer.get_feature_names())
-    #print(data_frame)
-    return matrix
+    # print(vectorizer)
+    vec = vectorizer.fit(training_token_array)
+    vec_matrix = vectorizer.transform(training_token_array)
+    # data_frame = pd.DataFrame(matrix.toarray(), columns=vectorizer.get_feature_names())
+    # print(data_frame)
+    return (test_token_array, vec, vec_matrix)
 
 
 def tf_idf_trans_feature_vector():
     token_array = text_processed()
+    training_token_array, test_token_array = split_string_2_data_array(token_array, 0.8)
     print(token_array)
-    vectorizer = TfidfTransformer(analyzer="word")
+    vectorizer = TfidfTransformer(stop_words='english', analyzer="word")
     # tokenize and build vocab
     X = vectorizer.fit_transform(token_array)
     analyze = vectorizer.build_analyzer()
@@ -64,17 +70,22 @@ def cluster_indices(cluster_assignments):
         indices.append(np.where(cluster_assignments == cluster_number)[0])
     return indices
 
-def dissimalrity_matrix():
+
+def compute_dissimalrity_matrix():
     token_array = text_processed()
     vectorizer = TfidfVectorizer(stop_words='english', analyzer="word")
 
     td_if = vectorizer.fit_transform(token_array)
-    x= td_if.toarray()
-    y= vectorizer.get_feature_names()
+    x = td_if.toarray()
+    y = vectorizer.get_feature_names()
     print(x)
     print(y)
     matrix = euclidean_distances(td_if)
 
-    #print(matrix)
+    # print(matrix)
     return matrix
 
+
+def compute_similarity_matrix(similarity_type, model_matrix, pred_matrix):
+    similarity_matrix = cosine_similarity(model_matrix, pred_matrix)
+    return similarity_matrix

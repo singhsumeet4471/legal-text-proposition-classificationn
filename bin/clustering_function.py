@@ -18,9 +18,9 @@ def get_cluster_kmeans(tfidf_matrix, num_clusters):
     print("Silhouette Coefficient score for K-means is : ", x)
     plot(tfs_embedded,km)
     plot_histo(km.labels_,num_clusters)
-    cluster_list = km.labels_.tolist()
 
-    return cluster_list
+
+    return km
 
 
 def get_dbscan_cluster(tfidf_matrix, epsilon,samples):
