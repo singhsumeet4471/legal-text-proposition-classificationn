@@ -2,7 +2,8 @@ import numpy as np
 import pandas as pd
 from gensim import models
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
-from sklearn.metrics.pairwise import euclidean_distances
+from sklearn.metrics.pairwise import euclidean_distances, cosine_distances, pairwise_distances, manhattan_distances, \
+    paired_cosine_distances, paired_euclidean_distances
 
 from text_processing import text_processed, split_string_2_data_array
 from sklearn.metrics.pairwise import cosine_similarity
@@ -41,7 +42,7 @@ def tf_idf_vect_feature_vector():
 
 def tf_idf_trans_feature_vector():
     token_array = text_processed()
-    training_token_array, test_token_array = split_string_2_data_array(token_array,  0.8)
+    training_token_array, test_token_array = split_string_2_data_array(token_array, 0.8)
     print(token_array)
     vectorizer = TfidfTransformer(stop_words='english', analyzer="word")
     # tokenize and build vocab
@@ -86,6 +87,19 @@ def compute_dissimalrity_matrix():
     return matrix
 
 
-def compute_similarity_matrix(similarity_type, model_matrix, pred_matrix):
+def compute_similarity_matrix(model_matrix, pred_matrix):
     similarity_matrix = cosine_similarity(model_matrix, pred_matrix)
     return similarity_matrix
+
+
+def compute_distance_matrix(model_matrix, pred_matrix, distance_matrix_type='euclidean'):
+    distance_matrix = []
+    if (distance_matrix_type == 'euclidean'):
+        distance_matrix = euclidean_distances(model_matrix, pred_matrix)
+    elif (distance_matrix == 'cosine'):
+        distance_matrix = cosine_distances(model_matrix, pred_matrix)
+    elif (distance_matrix == 'manhatten'):
+        distance_matrix = manhattan_distances(model_matrix, pred_matrix)
+    elif (distance_matrix == 'distance'):
+        distance_matrix = distance_matrix(model_matrix, pred_matrix)
+    return distance_matrix
