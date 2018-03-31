@@ -1,5 +1,7 @@
 import numpy as np
+from matplotlib import pyplot as plt
 from plotting_clusters import plot_histo, plot
+from scipy.cluster.hierarchy import dendrogram, linkage
 from sklearn import metrics
 from sklearn.cluster import DBSCAN
 from sklearn.cluster import KMeans
@@ -66,3 +68,19 @@ def truncate_SVD(tfidf_matrix,num_clusters):
     tfs_reduced = TruncatedSVD(n_components=num_clusters, random_state=0).fit_transform(tfidf_matrix)
     tfs_embedded = TSNE(n_components=2, perplexity=40, verbose=2).fit_transform(tfs_reduced)
     return  tfs_embedded
+
+
+def linkage_algo(X):
+    Z = linkage(X, 'ward')
+    fig = plt.figure(figsize=(25, 10))
+    dn = dendrogram(Z)
+
+    Z = linkage(X, 'single')
+    fig = plt.figure(figsize=(25, 10))
+    dn = dendrogram(Z)
+    plt.show()
+
+    Z = linkage(X, 'complete')
+    fig = plt.figure(figsize=(25, 10))
+    dn = dendrogram(Z)
+    plt.show()
