@@ -13,7 +13,7 @@ np.set_printoptions(threshold=np.inf)
 
 def count_vectorizer_feature_vector():
     token_array = text_processed()
-    training_token_array, test_token_array = split_string_2_data_array(token_array, 0.8)
+    training_token_array, test_token_array = split_string_2_data_array(token_array, 0.5)
 
     vectorizer = CountVectorizer(encoding='utf-8', analyzer='word', stop_words='english', binary='false',
                                  min_df=0.01)
@@ -41,7 +41,7 @@ def tf_idf_vect_feature_vector():
 
 def tf_idf_trans_feature_vector():
     token_array = text_processed()
-    training_token_array, test_token_array = split_string_2_data_array(token_array, 0.8)
+    training_token_array, test_token_array = split_string_2_data_array(token_array,  0.8)
     print(token_array)
     vectorizer = TfidfTransformer(stop_words='english', analyzer="word")
     # tokenize and build vocab

@@ -1,7 +1,8 @@
 import numpy
 import os.path
 import csv
-
+import requests
+from bs4 import BeautifulSoup
 cur_path = os.path.dirname(__file__)
 new_path = os.path.relpath('..\\dataset', cur_path)
 
@@ -40,3 +41,15 @@ def remove_duplicates(list):
         if item not in newlist:
             newlist.append(item)
     return newlist
+
+def web_scraping():
+
+
+    url = "http://www.gesetze-im-internet.de/englisch_abgg/englisch_abgg.html#p0333"
+
+    r = requests.get(url)
+
+    data = r.text
+
+    soup = BeautifulSoup(data)
+    print(data)

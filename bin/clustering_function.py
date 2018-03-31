@@ -10,10 +10,10 @@ from sklearn.manifold import TSNE
 
 
 def get_cluster_kmeans(tfidf_matrix, num_clusters):
+    tfs_embedded = truncate_SVD(tfidf_matrix, num_clusters)
+    km = KMeans(n_clusters=num_clusters, init='k-means++')
+    km.fit(tfs_embedded)
 
-    km = KMeans(n_clusters=num_clusters)
-    km.fit(tfidf_matrix)
-    tfs_embedded =truncate_SVD(tfidf_matrix,num_clusters)
     x = metrics.silhouette_score(tfidf_matrix, km.labels_, metric='euclidean')
     print("Silhouette Coefficient score for K-means is : ", x)
     plot(tfs_embedded,km)
