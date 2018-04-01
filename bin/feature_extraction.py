@@ -2,11 +2,9 @@ import numpy as np
 import pandas as pd
 from gensim import models
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
-from sklearn.metrics.pairwise import euclidean_distances, cosine_distances, pairwise_distances, manhattan_distances, \
-    paired_cosine_distances, paired_euclidean_distances
-
-from text_processing import text_processed, split_string_2_data_array
 from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics.pairwise import euclidean_distances, cosine_distances, manhattan_distances
+from text_processing import text_processed, split_string_2_data_array
 
 pd.set_option("display.max_columns", 100)
 np.set_printoptions(threshold=np.inf)
@@ -92,14 +90,13 @@ def compute_similarity_matrix(model_matrix, pred_matrix):
     return similarity_matrix
 
 
-def compute_distance_matrix(model_matrix, pred_matrix, distance_matrix_type='euclidean'):
+def compute_distance_matrix(model_matrix, pred_matrix, distance_matrix_type):
     distance_matrix = []
     if (distance_matrix_type == 'euclidean'):
         distance_matrix = euclidean_distances(model_matrix, pred_matrix)
-    elif (distance_matrix == 'cosine'):
+    elif (distance_matrix_type == 'cosine'):
         distance_matrix = cosine_distances(model_matrix, pred_matrix)
-    elif (distance_matrix == 'manhatten'):
+    elif (distance_matrix_type == 'manhatten'):
         distance_matrix = manhattan_distances(model_matrix, pred_matrix)
-    elif (distance_matrix == 'distance'):
-        distance_matrix = distance_matrix(model_matrix, pred_matrix)
+
     return distance_matrix
