@@ -9,7 +9,7 @@ from nltk.tokenize import word_tokenize
 
 
 def text_processed():
-    txt = data_csv_import('20180401024547.csv')
+    txt = data_csv_import('20180313151844.csv')
     # txt = data_txt_import_array('test.txt')
     # txt = strip_punctation(txt.lower())
     txt = remove_numeric_digit(txt)
