@@ -12,17 +12,18 @@ np.set_printoptions(threshold=np.inf)
 
 def count_vectorizer_feature_vector():
     token_array = text_processed()
-    training_token_array, test_token_array = split_string_2_data_array(token_array, 0.5)
+    training_token_array, test_token_array = split_string_2_data_array(token_array, 0.8)
 
     vectorizer = CountVectorizer(encoding='utf-8', analyzer='word', stop_words='english', binary='false',
                                  min_df=0.01)
     # tokenize and build vocab
-    vectorizer.fit_transform(token_array)
-    print(vectorizer.get_feature_names())
-    f_vector = vectorizer.transform(token_array)
-    print(f_vector.shape)
-    print(f_vector.toarray())
-    return f_vector
+    vec = vectorizer.fit(training_token_array)
+    vec_matrix = vectorizer.fit_transform(training_token_array)
+    # print(vectorizer.get_feature_names())
+    f_vector = vectorizer.transform(training_token_array)
+    # print(f_vector.shape)
+    # print(f_vector.toarray())
+    return (test_token_array, vec, vec_matrix)
 
 
 def tf_idf_vect_feature_vector():
