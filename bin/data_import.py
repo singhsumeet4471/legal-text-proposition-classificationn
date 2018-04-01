@@ -3,6 +3,9 @@ import os.path
 import csv
 import requests
 from bs4 import BeautifulSoup
+from datetime import datetime
+import re
+
 cur_path = os.path.dirname(__file__)
 new_path = os.path.relpath('..\\dataset', cur_path)
 
@@ -42,14 +45,34 @@ def remove_duplicates(list):
             newlist.append(item)
     return newlist
 
+
 def web_scraping():
-
-
+    NoneType = type(None)
     url = "http://www.gesetze-im-internet.de/englisch_abgg/englisch_abgg.html#p0333"
-
     r = requests.get(url)
 
-    data = r.text
+    online_data = r.text
+    data= []
+    soup = BeautifulSoup(online_data, 'html.parser')
+    list = soup.find_all('p')
 
-    soup = BeautifulSoup(data)
-    print(data)
+    csv_directory_path="H:\\University of Passau\\Projects\\Text Mining\\"
+    date_time = datetime.now()
+    filename = date_time.strftime('%Y%m%d%H%M%S') + '.csv'
+    csv_file = open(csv_directory_path + filename, 'w', newline='')
+    csv_writer = csv.writer(csv_file, )
+    csv_header = ['file_name', 'id', 'class', 'tocase', 'text']
+    csv_writer.writerow(csv_header)
+
+    for p in list:
+        data.clear()
+        data.append('p')
+        data.append('id')
+        data.append('class')
+        data.append('case')
+        data.append(re.sub('[^A-Za-z0-9 ]+', '', p.text.rstrip()))
+        if len(data) > 0:
+            csv_writer.writerow(data)
+        print(p.text)
+
+    csv_file.close()
