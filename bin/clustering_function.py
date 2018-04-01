@@ -18,8 +18,8 @@ def get_cluster_kmeans(tfidf_matrix, num_clusters):
 
     x = metrics.silhouette_score(tfidf_matrix, km.labels_, metric='euclidean')
     print("Silhouette Coefficient score for K-means is : ", x)
-    plot(tfs_embedded,km)
-    plot_histo(km.labels_,num_clusters)
+    plot(tfs_embedded,km,'K-Means','true')
+    plot_histo(km.labels_,num_clusters,'DB-Scan')
 
 
     return km
@@ -37,8 +37,8 @@ def get_dbscan_cluster(tfidf_matrix, epsilon,samples):
     print("Silhouette Coefficient score for DB-Scan is : ", x)
     n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
     tfs_embedded = truncate_SVD(tfidf_matrix, n_clusters_)
-    plot(tfs_embedded, db)
-    plot_histo(labels, n_clusters_)
+    plot(tfs_embedded, db,'DB-Scan','false')
+    plot_histo(labels, n_clusters_,'DB-Scan')
     return labels
 
 
@@ -74,13 +74,17 @@ def linkage_algo(X):
     Z = linkage(X, 'ward')
     fig = plt.figure(figsize=(25, 10))
     dn = dendrogram(Z)
+    plt.title('Ward-Dendrogram')
+    plt.show()
 
     Z = linkage(X, 'single')
     fig = plt.figure(figsize=(25, 10))
     dn = dendrogram(Z)
+    plt.title('Single-Dendrogram')
     plt.show()
 
     Z = linkage(X, 'complete')
     fig = plt.figure(figsize=(25, 10))
     dn = dendrogram(Z)
+    plt.title('Complete-Dendrogram')
     plt.show()

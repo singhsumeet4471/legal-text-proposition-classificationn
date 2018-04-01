@@ -3,22 +3,19 @@ import numpy as np
 np.set_printoptions(threshold=np.inf)
 
 from feature_extraction import tf_idf_vect_feature_vector,compute_distance_matrix
-from clustering_function import linkage_algo
+from clustering_function import linkage_algo, get_dbscan_cluster,get_cluster_kmeans
+
 
 # vector = count_vectorizer_feature_vector()
 # print('tf-idf vector')
 
-# cluster = get_dbscan_cluster(matrix,1)
+test_token_array, vec, vec_matrix = tf_idf_vect_feature_vector()
+cluster = get_dbscan_cluster(vec_matrix,0.5,30)
+cluster = get_cluster_kmeans(vec_matrix,6)
 # print(cluster)
 # print(cluster)
 
 # word2vec_feature_vector()
-
-# txt = data_csv_import('20180313151844.csv')
-# vec = dissimalrity_matrix()
-# print(vec)
-
-# dmt = DistanceMatrix1(matrix)
 
 # print(dmt)
 
@@ -30,7 +27,7 @@ from clustering_function import linkage_algo
 #
 
 # TESTING K MEANS
-test_token_array, vec, vec_matrix = tf_idf_vect_feature_vector()
+
 # no_cluster = 4
 #
 # km = get_cluster_kmeans(vec_matrix, no_cluster)
@@ -43,5 +40,5 @@ test_tfidf_matrix= vec.transform(test_token_array)
 # print(tested_cluster_list.tolist())
 # clust_eval(trained_cluster_list[:test_label_count], tested_cluster_list)
 
-matrix = compute_distance_matrix(vec_matrix,test_tfidf_matrix)
+matrix = compute_distance_matrix(vec_matrix,test_tfidf_matrix,'cosine')
 linkage_algo(matrix)
