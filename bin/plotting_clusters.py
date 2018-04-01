@@ -15,6 +15,7 @@ def plot(data,algo,name,is_center):
         print(centers)
         plt.scatter(centers[:, 0], centers[:, 1], marker='x', s=100, c='black')
 
+
     plt.plot()
     plt.show()
 

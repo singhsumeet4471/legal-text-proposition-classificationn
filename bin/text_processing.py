@@ -1,18 +1,15 @@
-from data_import import data_txt_import_array,data_csv_import
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-from nltk.stem import PorterStemmer, WordNetLemmatizer
-from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
-import string
 import re
-import numpy as np
+import string
+
 import numpy.random as npr
-import matplotlib.pyplot as plt
-from sklearn.cluster import KMeans
+from data_import import data_csv_import
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer, WordNetLemmatizer
+from nltk.tokenize import word_tokenize
 
 
 def text_processed():
-    txt = data_csv_import('20180313151844.csv')
+    txt = data_csv_import('20180401024547.csv')
     # txt = data_txt_import_array('test.txt')
     # txt = strip_punctation(txt.lower())
     txt = remove_numeric_digit(txt)
