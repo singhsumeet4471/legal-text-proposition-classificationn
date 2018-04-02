@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import seaborn as sns; sns.set()  # for plot styling
 import numpy as np
-
+from sklearn.metrics import confusion_matrix
 
 def plot(data,algo,name,is_center):
     colors = np.array([x for x in 'bgrcmykbgrcmykbgrcmykbgrcmyk'])
@@ -22,6 +22,20 @@ def plot(data,algo,name,is_center):
 def plot_histo(label,no_cluster,name):
     plt.hist(label, bins=no_cluster)
     plt.title(name + '-histogram')
+    plt.show()
+
+
+# plot_confusion_matrix(trained_cluster[:test_label_count], tested_cluster_list.tolist())
+
+def plot_confusion_matrix(training_labels, predicted_labels):
+    cm = confusion_matrix(training_labels, predicted_labels)
+
+    # Plot confusion matrix
+    plt.imshow(cm, interpolation='none', cmap='Blues')
+    for (i, j), z in np.ndenumerate(cm):
+        plt.text(j, i, z, ha='center', va='center')
+    plt.xlabel("kmeans label")
+    plt.ylabel("truth label")
     plt.show()
 
 
