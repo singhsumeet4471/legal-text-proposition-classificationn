@@ -20,9 +20,7 @@ def get_cluster_kmeans(tfidf_matrix, num_clusters):
     km.fit(tfs_embedded)
     t1=time()
     print('Clustering K-Means  takes %f  time' % (t1 - t0))
-
-    x = metrics.silhouette_score(tfidf_matrix, km.labels_, metric='euclidean')
-
+    x = metrics.silhouette_score(tfs_embedded, km.labels_, metric='euclidean')
     print("Silhouette Coefficient score for K-means is : ", x)
 
     plot(tfs_embedded, km, 'K-Means', 'true')
